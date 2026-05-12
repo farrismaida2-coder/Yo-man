@@ -5,6 +5,7 @@ let currentPage = 1;
 const gamesPerPage = 12;
 let filteredGames = [...allGames];
 let currentFilter = 'all';
+let currentGame = null;
 
 // Generate 1000 games
 function generateGames() {
@@ -112,6 +113,7 @@ function searchGames(query) {
 
 // Modal functions
 function openModal(game) {
+    currentGame = game;
     const modal = document.getElementById('gameModal');
     document.getElementById('modalTitle').textContent = game.emoji + ' ' + game.name;
     document.getElementById('modalDescription').textContent = game.description;
@@ -121,6 +123,26 @@ function openModal(game) {
 
 function closeModal() {
     document.getElementById('gameModal').style.display = 'none';
+}
+
+function playGame() {
+    if (currentGame) {
+        // Keep modal open and show game is launching
+        const modal = document.getElementById('gameModal');
+        const playBtn = document.getElementById('playBtn');
+        const originalText = playBtn.textContent;
+        
+        playBtn.textContent = '🎮 LOADING GAME...';
+        playBtn.disabled = true;
+        
+        // Simulate game loading
+        setTimeout(() => {
+            alert(`🎮 ${currentGame.name} has started!\n\nHave fun playing!\n\n${currentGame.description}`);
+            closeModal();
+            playBtn.textContent = originalText;
+            playBtn.disabled = false;
+        }, 1500);
+    }
 }
 
 // Event listeners
@@ -171,10 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Modal controls
     document.querySelector('.close').addEventListener('click', closeModal);
     
-    document.getElementById('playBtn').addEventListener('click', () => {
-        alert('🎮 Game launching! Enjoy your gaming experience!');
-        closeModal();
-    });
+    document.getElementById('playBtn').addEventListener('click', playGame);
 
     window.addEventListener('click', (e) => {
         const modal = document.getElementById('gameModal');
