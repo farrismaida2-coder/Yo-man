@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farris Games On Top 🎮</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a4d 50%, #0d0d2b 100%);
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Animated Stars Background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(10, 14, 39, 0.9);
+            border-bottom: 3px solid #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        h1 {
+            font-size: 3.5em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #00ff00, #ffff00);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease infinite;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+            margin-bottom: 10px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .subtitle {
+            color: #00ffff;
+            font-size: 1.2em;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+            margin-top: 10px;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(26, 26, 77, 0.8);
+            border-bottom: 2px solid #ff00ff;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .filter-btn {
+            padding: 12px 25px;
+            border: 2px solid #00ffff;
+            background: rgba(0, 255, 255, 0.1);
+            color: #00ffff;
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+            transform: scale(1.05);
+        }
+
+        /* Games Container */
+        .container {
+            position: relative;
+            z-index: 5;
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .game-card {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .game-card:hover::before {
+            left: 100%;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.8), 0 0 60px rgba(255, 0, 255, 0.5);
+            border-color: #ff00ff;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.3), rgba(255, 0, 255, 0.3));
+        }
+
+        .game-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .game-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+        }
+
+        .game-category {
+            color: #ff00ff;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);
+        }
+
+        .play-btn {
+            background: linear-gradient(45deg, #00ffff, #00ff88);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .play-btn:hover {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+            transform: scale(1.1);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #0a0e27, #1a1a4d);
+            margin: 10% auto;
+            padding: 40px;
+            border: 2px solid #00ffff;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.8);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+
+        .modal h2 {
+            color: #00ffff;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+        }
+
+        .modal p {
+            color: #00ff88;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .modal-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .play-game-btn, .close-btn {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .play-game-btn {
+            background: linear-gradient(45deg, #00ffff, #00ff88);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+        }
+
+        .play-game-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.8);
+        }
+
+        .close-btn {
+            background: rgba(255, 0, 127, 0.2);
+            color: #ff007f;
+            border: 2px solid #ff007f;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 0, 127, 0.4);
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
+        }
+
+        .close {
+            color: #00ffff;
+            float: right;
+            font-size: 2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.8);
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 30px;
+            background: rgba(10, 14, 39, 0.9);
+            border-top: 2px solid #ff00ff;
+            color: #00ffff;
+            margin-top: 50px;
+        }
+
+        .game-count {
+            font-size: 1.2em;
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .game-icon {
+                font-size: 2em;
+            }
+
+            .modal-content {
+                margin: 50% auto;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Stars -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Header -->
+    <header>
+        <h1>🎮 FARRIS GAMES ON TOP 🎮</h1>
+        <p class="subtitle">✨ 1000+ GAMES • ENDLESS FUN ✨</p>
+    </header>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterGames('all')">🎯 ALL GAMES</button>
+            <button class="filter-btn" onclick="filterGames('action')">⚡ ACTION</button>
+            <button class="filter-btn" onclick="filterGames('puzzle')">🧩 PUZZLE</button>
+            <button class="filter-btn" onclick="filterGames('strategy')">♟️ STRATEGY</button>
+            <button class="filter-btn" onclick="filterGames('adventure')">🗺️ ADVENTURE</button>
+            <button class="filter-btn" onclick="filterGames('sports')">⚽ SPORTS</button>
+        </div>
+    </div>
+
+    <!-- Games Container -->
+    <div class="container">
+        <div class="games-grid" id="gamesGrid"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p class="game-count">🌟 Total Games: <span id="totalGames">1000+</span> 🌟</p>
+        <p>Made with ❤️ by Farris | Space Edition</p>
+    </footer>
+
+    <!-- Modal -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-icon" id="modalIcon"></div>
+            <h2 id="modalTitle"></h2>
+            <p id="modalCategory"></p>
+            <p id="modalDescription"></p>
+            <div class="modal-buttons">
+                <button class="play-game-btn" onclick="startGame()">▶ PLAY NOW</button>
+                <button class="close-btn" onclick="closeModal()">BACK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game Database
+        const games = [
+            // Action Games (200+)
+            { id: 1, name: 'Space Shooter', icon: '🚀', category: 'action', description: 'Blast through enemies in space!' },
+            { id: 2, name: 'Ninja Warrior', icon: '🥷', category: 'action', description: 'Slice and dash through obstacles!' },
+            { id: 3, name: 'Dragon Slayer', icon: '🐉', category: 'action', description: 'Face the legendary dragon!' },
+            { id: 4, name: 'Zombie Rush', icon: '🧟', category: 'action', description: 'Survive the zombie apocalypse!' },
+            { id: 5, name: 'Bullet Storm', icon: '🔫', category: 'action', description: 'Rain bullets on your enemies!' },
+            { id: 6, name: 'Meteor Dodge', icon: '☄️', category: 'action', description: 'Dodge falling meteors!' },
+            { id: 7, name: 'Sword Master', icon: '⚔️', category: 'action', description: 'Master the ancient sword!' },
+            { id: 8, name: 'Monster Hunter', icon: '👹', category: 'action', description: 'Hunt down the monsters!' },
+            { id: 9, name: 'Laser Fighter', icon: '⚡', category: 'action', description: 'Fight with laser beams!' },
+            { id: 10, name: 'Bomb Blast', icon: '💣', category: 'action', description: 'Explosive action game!' },
+            { id: 11, name: 'Fireball Fury', icon: '🔥', category: 'action', description: 'Unleash fireballs!' },
+            { id: 12, name: 'Ice Warrior', icon: '❄️', category: 'action', description: 'Master ice powers!' },
+            { id: 13, name: 'Lightning Strike', icon: '⚡', category: 'action', description: 'Strike with lightning!' },
+            { id: 14, name: 'Shadow Fighter', icon: '🌑', category: 'action', description: 'Fight in the shadows!' },
+            { id: 15, name: 'Cyber Combat', icon: '🤖', category: 'action', description: 'Battle in cyberspace!' },
+            { id: 16, name: 'Viking Raid', icon: '⚔️', category: 'action', description: 'Viking conquest!' },
+            { id: 17, name: 'Pirate Battle', icon: '🏴‍☠️', category: 'action', description: 'High seas combat!' },
+            { id: 18, name: 'Kung Fu Master', icon: '🥋', category: 'action', description: 'Master martial arts!' },
+            { id: 19, name: 'Alien Invasion', icon: '👽', category: 'action', description: 'Fight alien invaders!' },
+            { id: 20, name: 'Robot Wars', icon: '🤖', category: 'action', description: 'Robot vs Robot!' },
+            ...Array.from({length: 180}, (_, i) => ({
+                id: 21 + i,
+                name: `Action Game ${21 + i}`,
+                icon: ['🚀', '🥷', '🐉', '🧟', '🔫', '☄️', '⚔️', '👹', '⚡', '💣'][i % 10],
+                category: 'action',
+                description: `Thrilling action adventure #${21 + i}!`
+            })),
+
+            // Puzzle Games (200+)
+            { id: 201, name: 'Block Master', icon: '🧱', category: 'puzzle', description: 'Match and clear blocks!' },
+            { id: 202, name: 'Maze Runner', icon: '🧩', category: 'puzzle', description: 'Find your way out!' },
+            { id: 203, name: 'Match Three', icon: '💎', category: 'puzzle', description: 'Match three gems!' },
+            { id: 204, name: 'Brain Teaser', icon: '🧠', category: 'puzzle', description: 'Challenge your mind!' },
+            { id: 205, name: 'Logic Grid', icon: '📊', category: 'puzzle', description: 'Solve the logic puzzle!' },
+            { id: 206, name: 'Sliding Puzzle', icon: '🎲', category: 'puzzle', description: 'Slide tiles to solve!' },
+            { id: 207, name: 'Sudoku Master', icon: '🔢', category: 'puzzle', description: 'Number puzzle fun!' },
+            { id: 208, name: 'Crossword Crush', icon: '📝', category: 'puzzle', description: 'Word puzzle game!' },
+            { id: 209, name: 'Memory Game', icon: '🧩', category: 'puzzle', description: 'Test your memory!' },
+            { id: 210, name: 'Pipe Connect', icon: '🔗', category: 'puzzle', description: 'Connect the pipes!' },
+            { id: 211, name: 'Bubble Pop', icon: '🫧', category: 'puzzle', description: 'Pop the bubbles!' },
+            { id: 212, name: 'Jewel Quest', icon: '💎', category: 'puzzle', description: 'Quest for jewels!' },
+            { id: 213, name: 'Shape Sorter', icon: '📐', category: 'puzzle', description: 'Sort the shapes!' },
+            { id: 214, name: 'Color Mixer', icon: '🎨', category: 'puzzle', description: 'Mix the colors!' },
+            { id: 215, name: 'Pattern Game', icon: '🔲', category: 'puzzle', description: 'Spot the pattern!' },
+            { id: 216, name: 'Word Search', icon: '🔍', category: 'puzzle', description: 'Find hidden words!' },
+            { id: 217, name: 'Number Crunch', icon: '🔢', category: 'puzzle', description: 'Math puzzle game!' },
+            { id: 218, name: 'Tangram Master', icon: '📐', category: 'puzzle', description: 'Tangram challenges!' },
+            { id: 219, name: 'Rotation Puzzle', icon: '🔄', category: 'puzzle', description: 'Rotate to solve!' },
+            { id: 220, name: 'Gravity Game', icon: '⬇️', category: 'puzzle', description: 'Defy gravity!' },
+            ...Array.from({length: 180}, (_, i) => ({
+                id: 221 + i,
+                name: `Puzzle Game ${221 + i}`,
+                icon: ['🧱', '🧩', '💎', '🧠', '📊', '🎲', '🔢', '📝', '🧩', '🔗'][i % 10],
+                category: 'puzzle',
+                description: `Mind-bending puzzle #${221 + i}!`
+            })),
+
+            // Strategy Games (200+)
+            { id: 401, name: 'Chess Master', icon: '♟️', category: 'strategy', description: 'Ultimate chess challenge!' },
+            { id: 402, name: 'Tower Defense', icon: '🏰', category: 'strategy', description: 'Defend your tower!' },
+            { id: 403, name: 'Army Commander', icon: '🪖', category: 'strategy', description: 'Command your army!' },
+            { id: 404, name: 'Trade Empire', icon: '💰', category: 'strategy', description: 'Build your empire!' },
+            { id: 405, name: 'Resource Manager', icon: '📦', category: 'strategy', description: 'Manage resources!' },
+            { id: 406, name: 'City Builder', icon: '🏙️', category: 'strategy', description: 'Build a city!' },
+            { id: 407, name: 'Checkers Game', icon: '⬛', category: 'strategy', description: 'Classic checkers!' },
+            { id: 408, name: 'Risk Taker', icon: '🎲', category: 'strategy', description: 'Risk and rewards!' },
+            { id: 409, name: 'Card Strategist', icon: '🃏', category: 'strategy', description: 'Strategic card game!' },
+            { id: 410, name: 'Domino Clash', icon: '🁢', category: 'strategy', description: 'Domino strategy!' },
+            { id: 411, name: 'Kingdom Wars', icon: '⚔️', category: 'strategy', description: 'Battle for kingdoms!' },
+            { id: 412, name: 'Fleet Master', icon: '⛵', category: 'strategy', description: 'Command a fleet!' },
+            { id: 413, name: 'Trading Post', icon: '🛍️', category: 'strategy', description: 'Trade and profit!' },
+            { id: 414, name: 'Terrain Tactics', icon: '🗺️', category: 'strategy', description: 'Tactical battlefield!' },
+            { id: 415, name: 'Economy Game', icon: '📈', category: 'strategy', description: 'Economic sim!' },
+            { id: 416, name: 'Diplomacy', icon: '🤝', category: 'strategy', description: 'Diplomatic game!' },
+            { id: 417, name: 'Mining Tycoon', icon: '⛏️', category: 'strategy', description: 'Build a mining empire!' },
+            { id: 418, name: 'Farm Simulator', icon: '🌾', category: 'strategy', description: 'Run a farm!' },
+            { id: 419, name: 'Traffic Control', icon: '🚗', category: 'strategy', description: 'Control traffic!' },
+            { id: 420, name: 'Survival Mode', icon: '🏕️', category: 'strategy', description: 'Survive in the wild!' },
+            ...Array.from({length: 180}, (_, i) => ({
+                id: 421 + i,
+                name: `Strategy Game ${421 + i}`,
+                icon: ['♟️', '🏰', '🪖', '💰', '📦', '🏙️', '⬛', '🎲', '🃏', '🁢'][i % 10],
+                category: 'strategy',
+                description: `Strategic challenge #${421 + i}!`
+            })),
+
+            // Adventure Games (200+)
+            { id: 601, name: 'Lost Island', icon: '🏝️', category: 'adventure', description: 'Explore a lost island!' },
+            { id: 602, name: 'Castle Quest', icon: '🏰', category: 'adventure', description: 'Quest in a castle!' },
+            { id: 603, name: 'Jungle Explorer', icon: '🌴', category: 'adventure', description: 'Explore the jungle!' },
+            { id: 604, name: 'Mountain Climber', icon: '⛰️', category: 'adventure', description: 'Climb the mountain!' },
+            { id: 605, name: 'Ocean Voyage', icon: '🌊', category: 'adventure', description: 'Voyage the oceans!' },
+            { id: 606, name: 'Desert Quest', icon: '🏜️', category: 'adventure', description: 'Quest in the desert!' },
+            { id: 607, name: 'Forest Adventure', icon: '🌲', category: 'adventure', description: 'Venture the forest!' },
+            { id: 608, name: 'Cave Explorer', icon: '🕳️', category: 'adventure', description: 'Explore deep caves!' },
+            { id: 609, name: 'Sky Rider', icon: '☁️', category: 'adventure', description: 'Ride the skies!' },
+            { id: 610, name: 'Underground World', icon: '🌍', category: 'adventure', description: 'Underground exploration!' },
+            { id: 611, name: 'Treasure Hunt', icon: '🗺️', category: 'adventure', description: 'Hunt for treasure!' },
+            { id: 612, name: 'Volcano Quest', icon: '🌋', category: 'adventure', description: 'Brave the volcano!' },
+            { id: 613, name: 'Polar Expedition', icon: '🧊', category: 'adventure', description: 'Arctic exploration!' },
+            { id: 614, name: 'Portal Quest', icon: '🌀', category: 'adventure', description: 'Portal adventure!' },
+            { id: 615, name: 'Time Traveler', icon: '⏰', category: 'adventure', description: 'Travel through time!' },
+            { id: 616, name: 'Astronaut Mission', icon: '🧑‍🚀', category: 'adventure', description: 'Space mission!' },
+            { id: 617, name: 'Submarine Deep', icon: '🚢', category: 'adventure', description: 'Deep sea mission!' },
+            { id: 618, name: 'Windmill Quest', icon: '🌪️', category: 'adventure', description: 'Quest for the windmill!' },
+            { id: 619, name: 'Magic Realm', icon: '✨', category: 'adventure', description: 'Enter a magical realm!' },
+            { id: 620, name: 'Lost City', icon: '🏛️', category: 'adventure', description: 'Find the lost city!' },
+            ...Array.from({length: 180}, (_, i) => ({
+                id: 621 + i,
+                name: `Adventure Game ${621 + i}`,
+                icon: ['🏝️', '🏰', '🌴', '⛰️', '🌊', '🏜️', '🌲', '🕳️', '☁️', '🌍'][i % 10],
+                category: 'adventure',
+                description: `Epic adventure #${621 + i}!`
+            })),
+
+            // Sports Games (200+)
+            { id: 801, name: 'Football Master', icon: '🏈', category: 'sports', description: 'Football championship!' },
+            { id: 802, name: 'Basketball Hoops', icon: '🏀', category: 'sports', description: 'Score those hoops!' },
+            { id: 803, name: 'Soccer Stars', icon: '⚽', category: 'sports', description: 'Soccer superstars!' },
+            { id: 804, name: 'Tennis Pro', icon: '🎾', category: 'sports', description: 'Professional tennis!' },
+            { id: 805, name: 'Baseball Legend', icon: '⚾', category: 'sports', description: 'Baseball legend!' },
+            { id: 806, name: 'Golf Master', icon: '⛳', category: 'sports', description: 'Golf perfection!' },
+            { id: 807, name: 'Ice Hockey', icon: '🏒', category: 'sports', description: 'Ice hockey action!' },
+            { id: 808, name: 'Volleyball Game', icon: '🏐', category: 'sports', description: 'Volleyball fun!' },
+            { id: 809, name: 'Boxing Ring', icon: '🥊', category: 'sports', description: 'Boxing match!' },
+            { id: 810, name: 'MMA Fighter', icon: '🥋', category: 'sports', description: 'Mixed martial arts!' },
+            { id: 811, name: 'Cycling Race', icon: '🚴', category: 'sports', description: 'Bike race!' },
+            { id: 812, name: 'Skateboard Pro', icon: '🛹', category: 'sports', description: 'Skateboard tricks!' },
+            { id: 813, name: 'Surfing Wave', icon: '🏄', category: 'sports', description: 'Catch the waves!' },
+            { id: 814, name: 'Swimming Race', icon: '🏊', category: 'sports', description: 'Swim competition!' },
+            { id: 815, name: 'Track Star', icon: '🏃', category: 'sports', description: 'Track and field!' },
+            { id: 816, name: 'Ski Slope', icon: '⛷️', category: 'sports', description: 'Ski racing!' },
+            { id: 817, name: 'Bowling Strikes', icon: '🎳', category: 'sports', description: 'Perfect strikes!' },
+            { id: 818, name: 'Archery Pro', icon: '🏹', category: 'sports', description: 'Archery mastery!' },
+            { id: 819, name: 'Dart Champion', icon: '🎯', category: 'sports', description: 'Dart throws!' },
+            { id: 820, name: 'Badminton Rally', icon: '🏸', category: 'sports', description: 'Badminton action!' },
+            ...Array.from({length: 180}, (_, i) => ({
+                id: 821 + i,
+                name: `Sports Game ${821 + i}`,
+                icon: ['🏈', '🏀', '⚽', '🎾', '⚾', '⛳', '🏒', '🏐', '🥊', '🥋'][i % 10],
+                category: 'sports',
+                description: `Sports challenge #${821 + i}!`
+            }))
+        ];
+
+        let currentGame = null;
+        let filteredGames = games;
+
+        // Initialize stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Render games
+        function renderGames(gamesToRender) {
+            const gamesGrid = document.getElementById('gamesGrid');
+            gamesGrid.innerHTML = '';
+            
+            gamesToRender.forEach(game => {
+                const gameCard = document.createElement('div');
+                gameCard.className = 'game-card';
+                gameCard.innerHTML = `
+                    <div class="game-icon">${game.icon}</div>
+                    <div class="game-title">${game.name}</div>
+                    <div class="game-category">${game.category.toUpperCase()}</div>
+                    <button class="play-btn" onclick="openModal(${game.id})">▶ PLAY</button>
+                `;
+                gamesGrid.appendChild(gameCard);
+            });
+
+            document.getElementById('totalGames').textContent = gamesToRender.length + '+';
+        }
+
+        // Filter games
+        function filterGames(category) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Filter games
+            if (category === 'all') {
+                filteredGames = games;
+            } else {
+                filteredGames = games.filter(game => game.category === category);
+            }
+            renderGames(filteredGames);
+        }
+
+        // Open modal
+        function openModal(gameId) {
+            const game = games.find(g => g.id === gameId);
+            if (game) {
+                currentGame = game;
+                document.getElementById('modalIcon').textContent = game.icon;
+                document.getElementById('modalTitle').textContent = game.name;
+                document.getElementById('modalCategory').textContent = `Category: ${game.category.toUpperCase()}`;
+                document.getElementById('modalDescription').textContent = game.description;
+                document.getElementById('gameModal').style.display = 'block';
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('gameModal').style.display = 'none';
+        }
+
+        // Start game
+        function startGame() {
+            if (currentGame) {
+                alert(`🎮 Starting ${currentGame.name}! 🎮\n\nGet ready for an amazing adventure!\n\n${currentGame.description}`);
+                closeModal();
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('gameModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            createStars();
+            renderGames(games);
+        });
+    </script>
+</body>
+</html>
